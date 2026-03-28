@@ -112,15 +112,11 @@ class DefaultExerciseSeeder
   end
 
   def call
-    created = 0
-    EXERCISES.each do |attrs|
-      exercise = Exercise.find_or_initialize_by(user_id: @user_id, name: attrs[:name])
-      if exercise.new_record?
-        exercise.assign_attributes(attrs.merge(is_default: true))
-        exercise.save!
-        created += 1
-      end
+    now = Time.current
+    records = EXERCISES.map do |attrs|
+      attrs.merge(user_id: @user_id, is_default: true, created_at: now, updated_at: now)
     end
-    created
+    Exercise.insert_all!(records)
+    records.size
   end
 end

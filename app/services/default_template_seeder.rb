@@ -43,35 +43,39 @@ class DefaultTemplateSeeder
   end
 
   def call
+    now = Time.current
+
+    template_records = TEMPLATES.map do |t|
+      { user_id: @user_id, name: t[:name], notes: t[:notes], is_default: true, created_at: now, updated_at: now }
+    end
+    WorkoutTemplate.insert_all!(template_records)
+
+    templates = WorkoutTemplate.where(user_id: @user_id, is_default: true).index_by(&:name)
     exercises = Exercise.where(user_id: @user_id).index_by(&:name)
-    created = 0
 
+    te_records = []
     TEMPLATES.each do |template_def|
-      next if WorkoutTemplate.exists?(user_id: @user_id, name: template_def[:name], is_default: true)
-
-      template = WorkoutTemplate.create!(
-        user_id: @user_id,
-        name: template_def[:name],
-        notes: template_def[:notes],
-        is_default: true
-      )
+      template = templates[template_def[:name]]
+      next unless template
 
       template_def[:exercises].each_with_index do |ex_def, idx|
         exercise = exercises[ex_def[:name]]
         next unless exercise
 
-        template.template_exercises.create!(
-          exercise: exercise,
+        te_records << {
+          workout_template_id: template.id,
+          exercise_id: exercise.id,
           position: idx + 1,
           default_sets: ex_def[:default_sets],
           default_reps: ex_def[:default_reps],
-          rest_seconds: ex_def[:rest_seconds]
-        )
+          rest_seconds: ex_def[:rest_seconds],
+          created_at: now,
+          updated_at: now
+        }
       end
-
-      created += 1
     end
+    TemplateExercise.insert_all!(te_records) if te_records.any?
 
-    created
+    TEMPLATES.size
   end
 end
