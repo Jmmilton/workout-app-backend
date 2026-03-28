@@ -22,6 +22,7 @@ class ApplicationController < ActionController::API
   end
 
   def seed_defaults_for_new_user
+    return if Rails.env.test?
     return unless @current_user_id
     return if Exercise.exists?(user_id: @current_user_id)
 
