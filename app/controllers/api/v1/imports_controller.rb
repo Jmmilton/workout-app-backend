@@ -1,9 +1,16 @@
 module Api
   module V1
     class ImportsController < ApplicationController
+      MAX_FILE_SIZE = 5.megabytes
+      MAX_ROWS = 50_000
+
       def csv
         unless params[:file].present?
           return render json: { error: "No file provided" }, status: :bad_request
+        end
+
+        if params[:file].size > MAX_FILE_SIZE
+          return render json: { error: "File too large (max 5MB)" }, status: :unprocessable_content
         end
 
         csv_content = params[:file].read

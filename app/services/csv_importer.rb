@@ -21,6 +21,8 @@ class CsvImporter
   def call
     rows = CSV.parse(@csv_content, headers: true)
 
+    raise CSV::MalformedCSVError.new("File exceeds maximum of 50,000 rows", 0) if rows.size > 50_000
+
     exercises_created = 0
     workouts_created = 0
     sets_created = 0
