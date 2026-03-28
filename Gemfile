@@ -37,7 +37,7 @@ gem "active_model_serializers", "~> 0.10"
 gem "csv"
 
 # Load environment variables from .env
-gem "dotenv-rails", groups: [:development, :test]
+gem "dotenv-rails", groups: [ :development, :test ]
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -53,5 +53,3 @@ group :development, :test do
   gem "rspec-rails", "~> 7.0"
   gem "factory_bot_rails"
 end
-
-

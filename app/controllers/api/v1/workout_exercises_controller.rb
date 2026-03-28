@@ -2,7 +2,7 @@ module Api
   module V1
     class WorkoutExercisesController < ApplicationController
       before_action :set_workout
-      before_action :set_workout_exercise, only: [:update, :destroy]
+      before_action :set_workout_exercise, only: [ :update, :destroy ]
 
       def create
         position = @workout.workout_exercises.maximum(:position).to_i + 1

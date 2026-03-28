@@ -1,7 +1,7 @@
 module Api
   module V1
     class ExercisesController < ApplicationController
-      before_action :set_exercise, only: [:show, :update, :destroy]
+      before_action :set_exercise, only: [ :show, :update, :destroy ]
 
       def index
         exercises = Exercise.where(user_id: current_user_id)

@@ -3,7 +3,7 @@ module Api
     class WorkoutSetsController < ApplicationController
       before_action :set_workout
       before_action :set_workout_exercise
-      before_action :set_workout_set, only: [:update, :destroy]
+      before_action :set_workout_set, only: [ :update, :destroy ]
 
       def create
         set_order = @workout_exercise.workout_sets.maximum(:set_order).to_i + 1
