@@ -1,7 +1,7 @@
 module Api
   module V1
     class WorkoutsController < ApplicationController
-      before_action :set_workout, only: [:show, :update, :destroy]
+      before_action :set_workout, only: [ :show, :update, :destroy ]
 
       def index
         workouts = Workout
@@ -52,7 +52,7 @@ module Api
 
         if workout.save
           workout = Workout
-            .includes(workout_exercises: [:exercise, :workout_sets])
+            .includes(workout_exercises: [ :exercise, :workout_sets ])
             .find(workout.id)
           render json: workout, serializer: WorkoutSerializer, status: :created
         else
@@ -86,7 +86,7 @@ module Api
 
       def set_workout
         @workout = Workout
-          .includes(workout_exercises: [:exercise, :workout_sets])
+          .includes(workout_exercises: [ :exercise, :workout_sets ])
           .find_by!(id: params[:id], user_id: current_user_id)
       rescue ActiveRecord::RecordNotFound
         render json: { error: "Workout not found" }, status: :not_found

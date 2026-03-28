@@ -68,7 +68,7 @@ class CsvImporter
 
             WorkoutSet.create!(
               workout_exercise: workout_exercise,
-              set_order: [row["Set Order"].to_i, 1].max,
+              set_order: [ row["Set Order"].to_i, 1 ].max,
               weight: weight > 0 ? weight : nil,
               reps: reps > 0 ? reps : nil,
               distance: distance_val > 0 ? distance_val : nil,

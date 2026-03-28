@@ -104,7 +104,7 @@ class DefaultExerciseSeeder
     { name: "Wrist Curl (Barbell)", muscle_group: "forearms", equipment_type: "barbell",
       description: "Sit with forearms on thighs, palms up, wrists over knees. Curl bar up using only wrist movement." },
     { name: "Reverse Curl (Barbell)", muscle_group: "forearms", equipment_type: "barbell",
-      description: "Curl barbell with overhand (pronated) grip. Targets brachioradialis and forearm extensors." },
+      description: "Curl barbell with overhand (pronated) grip. Targets brachioradialis and forearm extensors." }
   ].freeze
 
   def initialize(user_id)

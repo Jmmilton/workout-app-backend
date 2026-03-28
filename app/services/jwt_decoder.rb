@@ -8,11 +8,11 @@ class JwtDecoder
 
     case header["alg"]
     when "ES256"
-      payload, = JWT.decode(token, nil, true, algorithms: ["ES256"], jwks: cached_jwks)
+      payload, = JWT.decode(token, nil, true, algorithms: [ "ES256" ], jwks: cached_jwks)
       payload
     when "HS256", "HS384", "HS512"
       secret = ENV.fetch("SUPABASE_JWT_SECRET")
-      payload, = JWT.decode(token, secret, true, algorithms: [header["alg"]])
+      payload, = JWT.decode(token, secret, true, algorithms: [ header["alg"] ])
       payload
     else
       raise DecodeError, "Unsupported algorithm: #{header["alg"]}"
