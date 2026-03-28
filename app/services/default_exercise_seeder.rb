@@ -116,7 +116,7 @@ class DefaultExerciseSeeder
     EXERCISES.each do |attrs|
       exercise = Exercise.find_or_initialize_by(user_id: @user_id, name: attrs[:name])
       if exercise.new_record?
-        exercise.assign_attributes(attrs)
+        exercise.assign_attributes(attrs.merge(is_default: true))
         exercise.save!
         created += 1
       end

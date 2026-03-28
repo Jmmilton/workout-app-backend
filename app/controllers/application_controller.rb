@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::API
   before_action :authenticate_user!
+  before_action :seed_defaults_for_new_user
 
   private
 
@@ -18,5 +19,13 @@ class ApplicationController < ActionController::API
 
   def current_user_id
     @current_user_id
+  end
+
+  def seed_defaults_for_new_user
+    return unless @current_user_id
+    return if Exercise.exists?(user_id: @current_user_id)
+
+    DefaultExerciseSeeder.new(@current_user_id).call
+    DefaultTemplateSeeder.new(@current_user_id).call
   end
 end
